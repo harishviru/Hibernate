@@ -1,0 +1,55 @@
+  1)What are design patterns are used in Hibernate Framework.......?
+    • Hibernate uses below design patterns ,they are
+                          i)Domain Model 
+                          ii)Data mapper
+                         iii)Proxy Pattern
+                         iv)Factory Pattern 
+                         
+   #Domain Model ::
+       •An object model of the domain that incorporates both behaviour and data.    
+       •A domain model is an Object oriented represented of business logic.
+        Domain model patterns are of two types....
+                i)Simple domain model              :: It looks very much like the database design with mostly one domain class for each database table 
+                ii)Rich  domain model                :: it can look different from the databse design ,with inheritance,strategies,and other patterns.
+     
+     Note : check DomainModelPattern.JPG                  
+                         
+     #Data mapper
+       • The data mapper is an architectural pattern.
+       • A data mapper is a Data Access layer that performs bidirectional transfer of data
+          between a persistent store (Database) and an in-memory data representation (domain layer).
+       
+      Note : Check Example under com.har.datamapper pkg
+      
+   #Proxy Pattern   
+   • Proxy provide a surrogate or placeholder for another object to control access it.
+      Proxy means 'in place of' or 'Representing' or 'on behalf of'.
+   • Proxy is the object that is called by the client to access the real object behind scene.
+   • In Proxy pattern, a class represents functionality of another class.
+     Types ::
+                  i)Remote proxy
+                  ii)Virtual proxy
+                  iii)Protection proxy
+                  iv)Smart proxy
+   
+   * The proxy pattern allows  us to create an intermediary that acts as an interface to another resource
+     and also hiding the underlying complexity of the component.
+   
+   Note : if you want heavy objects in your application,then we can use proxy design pattern
+             [Check com.har.proxy pkg]
+   
+   #Factory Design Pattern 
+   ======================
+   • In Factory pattern, we create object without exposing the creation logic to the client 
+   • In simple words, if we have a super class and n sub-classes   and based on the data provided, we have to 
+    return one of subclass  object.
+    
+    Note :  [Check com.har.factory pkg]      
+       
+       
+       
+       
+       
+                         
+                         
+                          
