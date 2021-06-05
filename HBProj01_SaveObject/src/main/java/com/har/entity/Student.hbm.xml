@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping>
+                       <class name="com.har.entity.Student" table="student">
+                                     <id name="studentId" column="student_id" type="java.lang.Integer">
+                                           <generator class="increment"/>
+                                     </id>
+                                     <property name="firstName" column="first_name" type="java.lang.String"/>
+                                     <property name="lastName" column="last_name" type="java.lang.String"/>
+                                     <property name="marks" column="marks" type="java.lang.Integer"/>
+                                     <property name="grade" column="grade" type="java.lang.String"/>
+                       </class>
+        </hibernate-mapping>
