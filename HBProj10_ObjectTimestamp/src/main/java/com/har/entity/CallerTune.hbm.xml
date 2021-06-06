@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping>
+                       <class name="com.har.entity.CallerTune" table="caller_tune">
+                                     <id name="callerTuneId" column="callerTune_id" type="java.lang.Integer">
+                                           <generator class="increment"/>
+                                     </id>
+                               <!-- In hibernate mapping file,we can add an element like <timestamp>   soon after id element .-->
+                                     <timestamp name="lastUpdated" column="lastUpdated"/>
+                                     <property name="callerTune" column="caller_tune" type="java.lang.String"/>
+                                     <property name="provider" column="provider" type="java.lang.String"/>
+                                     <property name="mobile" column="mobile" type="java.lang.Long"/>
+                       </class>
+        </hibernate-mapping>
