@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping>
+                       <class name="com.har.entity.Employee" table="employee">
+                                     <id name="empId" column="emp_id" type="java.lang.Integer">
+                                           <generator class="increment"/>
+                                     </id>
+                       <!-- 	In hibernate mapping file,we can add an element like <version>    soon after id element .-->
+                                     <version name="version" column="version" type="java.lang.Integer"/>
+                                     <property name="empName" column="emp_name" type="java.lang.String"/>
+                                     <property name="position" column="position" type="java.lang.String"/>
+                                     <property name="salary" column="salary" type="java.lang.Double"/>
+                       </class>
+        </hibernate-mapping>
