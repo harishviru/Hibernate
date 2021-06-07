@@ -1,0 +1,77 @@
+
+1)uuid           :: org.hibernate.id.AbstractUUIDGenerator (Universal unique Identifier)
+
+• All the above generators classes are applicable for number type of PK  column of table.
+•PK  column of table is a string type we can use  either assigned Or uuid.hex has a generator class.
+•uuid generator generates a string of 32 characters length based on the following four values:
+
+    1) IP Address of the machine
+    2)Start-up time of JVM
+    3)System time
+    4)Counter value in JVM
+
+	private String prodId;
+	
+                    <id name="prodId"  column="product_id" length="40" type="string">
+		                       <generator class="uuid" />
+	                    </id>
+
+	  Generated Id ---------------> :: 4028ab6379e7c4840179e7c4892e0000                  
+	  
+	      insert 
+    into
+        product
+        (product_name, product_price, product_id) 
+    values
+        (?, ?, ?)
+successfully saved policy object with id   ::4028ab6379e7c4840179e7c4892e0000   
+
+2)GUID        ::Globally Unique Identifier
+
+• same as the uuid algorithm.it is a database dependent
+• It works on SQL server,and MYSQL
+• It generates string based identity value
+
+            <id name="studentId" column="sid">
+                          <generator class="guid" />
+           </id>
+
+Hibernate: 
+    select
+        uuid()
+Jun 08, 2021 12:22:39 AM org.hibernate.id.GUIDGenerator generate
+WARN: HHH000113: GUID identifier generated: c68c35c1-c7c1-11eb-9fe3-dc4a3ed12120
+Hibernate: 
+    insert 
+    into
+        product
+        (product_name, product_price, product_id) 
+    values
+        (?, ?, ?)
+successfully saved policy object with id   ::c68c35c1-c7c1-11eb-9fe3-dc4a3ed12120                  
+	                    
+	                    
+ =======================================Annotation==============================
+ 
+ 1)UUID
+  @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "product_id", updatable = false, nullable = false)
+    private UUID id;*/
+	
+	2)GUID
+	@Id
+    @GeneratedValue(generator = "GUID")
+    @GenericGenerator(
+        name = "GUID",
+        strategy = "org.hibernate.id.GUIDGenerator"
+    )
+    @Column(name = "product_id", updatable = false, nullable = false)
+    private String id;
+ 
+	                 
+
+	                    
