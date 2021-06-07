@@ -1,0 +1,384 @@
+ 
+    Generators::
+    ===========
+    
+    i) assigned          :: We must have to  manually assigned before calling save,otherwise Hibernate throw exception
+                                    org.hibernate.id.IdentifierGenerationException: ids for this class must be manually assigned before calling save(): com.har.entity.Product
+
+     <generator class="assigned"/>
+     
+              Product product = new Product();
+			  product.setProdId(30);             /// For assigned generator
+			  product.setProductName("MI");
+			  product.setProdPrice(16000.0);
+			  
+OP::
+    Hibernate: 
+    insert 
+    into
+        product
+        (product_name, product_price, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::30
+
+ii)increment
+            <generator class="increment"/> 
+     if we use increment as generator ,then Hibernate max()+1
+      SQL>        select max(product_id)  from product
+                                  
+iii)sequence         :: Only works in Oracle but not in MYSQL
+  <generator class="sequence"/>
+  
+ > Hibernate uses  hibernate_sequence as default one.
+    create table hibernate_sequence (
+       next_val bigint
+    ) engine=MyISAM
+    
+   > insert into hibernate_sequence values ( 1 )
+    
+   > select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+        
+        
+   ==> My OWN Table sequene  is ::
+        
+   > create table product_sequence (
+       next_val bigint
+    ) 
+
+******* 
+                 [Sequence works in Oracle.........! If we use in MYSQL It create default table like hibernate_sequence]
+     <generator class="sequence">  
+              <param name="sequence">product_sequence</param>
+         </generator>
+
+iv)identity      :: Works in MYSQL but in Oracle becoz it supports AUTO INCREMENT.
+             
+             <generator class="identity"/>
+             
+  >insert 
+    into
+        product
+        (product_name, product_price) 
+    values
+        (?, ?)
+successfully saved product object with id   ::2
+
+v)hilo     :: deprecated /not working in H 5.x
+
+vi)native
+• native doesn't have a separate generator class. It just uses other generator classes. 
+                                                                                                                                      identity,
+                                                                                                                                      sequence,
+                                                                                                                                      hilo
+                                                                                                                                      
+                                                                                                                                      
+           ---------------------------------------------------------------------------------@annotations------------------------------------------------------------------------------
+           
+     1)@Id                 //Default //Here we meust supply id value to persisting object
+    
+    	//Default Developer must have to supply id value
+	@Id
+	 @Column(name="product_id")
+	private Integer prodId;
+     
+     
+     Hibernate: 
+    insert 
+    into
+        product
+        (product_price, product_name) 
+    values
+        (?, ?)
+successfully saved product object with id   ::3      
+           
+                                                                                                                                      
+
+2) GenerationType.AUTO            
+
+	 @Id
+	 @GeneratedValue                    // ==== equal ==@GeneratedValue(strategy=GenerationType.AUTO)
+	 @Column(name="product_id")
+	private Integer prodId;
+
+
+--->Based on underlying database ,it will pick generator
+
+  create table hibernate_sequence (
+       next_val bigint
+    ) engine=MyISAM
+    
+        insert into hibernate_sequence values ( 1 )
+    
+      select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+        
+        insert 
+    into
+        product
+        (product_price, product_name, product_id) 
+    values
+        (?, ?, ?)
+        
+
+3) GenerationType.IDENTITY
+	 @Id
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)                 
+	 @Column(name="product_id")
+	 private Integer prodId;
+	 
+	 ---->Hibernate GenerationType.IDENTITY uses----MYSQL used auto_increment 
+
+create table product (
+       product_id integer not null auto_increment,
+        product_name varchar(255),
+        product_price double precision,
+        primary key (product_id)
+    ) engine=MyISAM
+
+Hibernate: 
+    insert 
+    into
+        product
+        (product_price, product_name) 
+    values
+        (?, ?)
+successfully saved product object with id   ::1
+
+
+4)GenerationType.SEQUENCE             ::Hibernate use TABLE Sequence in MYSQL
+->Actually SEQUENECE Works in Oracle but  not in MYSQL ,becoz Hibernate uses TABLE SEQUENCE In MYSQL
+
+    //#01 :GenerationType.SEQUENCE    
+	//Actually SEQUENECE Works in Oracle but  not in MYSQL ,becoz Hibernate uses TABLE SEQUENCE In MYSQL
+	///Here Hibernate create default sequence
+	/*@Id
+	 @GeneratedValue (strategy= GenerationType.SEQUENCE)
+	 @Column(name="product_id")
+	 private Integer prodId
+	 
+	
+ create table hibernate_sequence (
+       next_val bigint
+    ) engine=MyISAM
+
+    
+  insert into hibernate_sequence values ( 1 )
+
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+Hibernate: 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    insert 
+    into
+        product
+        (product_price, product_name, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::1
+			  
+	
+	  //#02 :GenerationType.SEQUENCE   
+	   //Actually SEQUENECE Works in Oracle but  not in MYSQL ,becoz Hibernate uses TABLE SEQUENCE In MYSQL
+	   ///Here We are assigning the our table sequence
+		 @Id
+		 @GeneratedValue (strategy= GenerationType.SEQUENCE,generator="prodSeqGen")
+		@SequenceGenerator(name = "prodSeqGen", sequenceName = "product_sequence")
+		 @Column(name="product_id")
+		 private Integer prodId;		  
+			  
+create table product_sequence (
+       next_val bigint
+    ) engine=MyISAM
+Hibernate: 
+
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        product_sequence for update
+            
+Hibernate: 
+    update
+        product_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    select
+        next_val as id_val 
+    from
+        product_sequence for update
+            
+Hibernate: 
+    update
+        product_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+Hibernate: 
+    insert 
+    into
+        product
+        (product_price, product_name, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::1	  
+			  
+		
+5)GenerationType.TABLE
+///Here Hibernate create default Table for Id generation
+	@Id
+	@GeneratedValue (strategy= GenerationType.TABLE)
+	@Column(name="product_id")
+	private Integer prodId;	  
+	
+	Hibernate:     
+    drop table if exists hibernate_sequences
+Hibernate: 
+    
+    drop table if exists product
+Hibernate: 
+    
+    create table hibernate_sequences (
+       sequence_name varchar(255) not null,
+        next_val bigint,
+        primary key (sequence_name)
+    ) engine=MyISAM
+Hibernate: 
+    
+    insert into hibernate_sequences(sequence_name, next_val) values ('default',0)
+Hibernate: 
+    
+    create table product (
+       product_id integer not null,
+        product_name varchar(255),
+        product_price double precision,
+        primary key (product_id)
+    ) engine=MyISAM
+Hibernate: 
+    select
+        tbl.next_val 
+    from
+        hibernate_sequences tbl 
+    where
+        tbl.sequence_name=? for update
+            
+Hibernate: 
+    update
+        hibernate_sequences 
+    set
+        next_val=?  
+    where
+        next_val=? 
+        and sequence_name=?
+Hibernate: 
+    insert 
+    into
+        product
+        (product_price, product_name, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::1
+			  
+		
+			
+	///#02.Here Hibernate uses assinged Table 
+	@Id
+	@GeneratedValue (strategy= GenerationType.TABLE,generator="prodTableGen")
+	@TableGenerator(name = "prodTableGen", table = "product_sequence")
+	@Column(name="product_id")
+	private Integer prodId;	  
+			  
+			  
+	Hibernate: 
+    
+    drop table if exists product
+Hibernate: 
+    
+    drop table if exists product_sequence
+Hibernate: 
+    
+    create table product (
+       product_id integer not null,
+        product_name varchar(255),
+        product_price double precision,
+        primary key (product_id)
+    ) engine=MyISAM
+Hibernate: 
+    
+    create table product_sequence (
+       sequence_name varchar(255) not null,
+        next_val bigint,
+        primary key (sequence_name)
+    ) engine=MyISAM
+Hibernate: 
+    
+    insert into product_sequence(sequence_name, next_val) values ('product',0)
+Hibernate: 
+    select
+        tbl.next_val 
+    from
+        product_sequence tbl 
+    where
+        tbl.sequence_name=? for update
+            
+Hibernate: 
+    update
+        product_sequence 
+    set
+        next_val=?  
+    where
+        next_val=? 
+        and sequence_name=?
+Hibernate: 
+    select
+        tbl.next_val 
+    from
+        product_sequence tbl 
+    where
+        tbl.sequence_name=? for update
+            
+Hibernate: 
+    update
+        product_sequence 
+    set
+        next_val=?  
+    where
+        next_val=? 
+        and sequence_name=?
+Hibernate: 
+    insert 
+    into
+        product
+        (product_price, product_name, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::1		  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
