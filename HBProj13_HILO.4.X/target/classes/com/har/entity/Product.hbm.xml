@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping>
+                       <class name="com.har.entity.Product" table="product">
+                                     <id name="prodId" column="product_id"   type="java.lang.Integer">
+                                                <!--  <generator class="assigned"/> [ Programmer responsible submit identifier value]-->
+                                              <!--   <generator class="increment"/> [Hibernate  use max() +1 ]-->
+                                               <!--  <generator class="sequence"/> [Hibernate generates default hibernate_sequence ] -->
+                                              <!--   <generator class="sequence">   [Sequence works in Oracle.........! If we use in MYSQL It create default table like hibernate_sequence
+                                                     <param name="sequence">product_sequence</param>
+                                                </generator> -->
+                                               <!--  <generator class="identity"/>   [Works in MYSQL but in Oracle becoz it supports AUTO INCREMENT.] -->
+                                               
+                                                      <!--  <generator class="hilo">     //not working in H 5.x
+	                                                              <param name="table">mytable</param>
+	                                                              <param name="column">col1</param>
+	                                                               <param name="max_lo">10</param>
+                                                          </generator> -->
+                                                          
+                                                        <!-- <generator class="native"/>  works like identity,sequence,hilo-->
+                                                         
+                                                          <!-- ---FROM HERE -->
+                                                          
+                                                          
+                                                          
+                                                           <!--  <generator class="hilo"/>  Hibernate 4.x-->
+                                                          <!-- HB uses formula is ::  max_lo*next_hi+next_hi  [next_hi is column name ]  -->     
+                                                          <!--  10*1+1=11,10*2+2=22,10*3+3=33..........etc -->                                                 
+                                                             <!--    <generator class="hilo">
+                                                                        <param name="max_lo">10</param> 
+                                                               </generator> -->
+
+                                                           <generator class="hilo">
+	                                                          <param name="table">HI_TAB</param>
+	                                                          <param name="column">HI_VAL</param>
+	                                                          <param name="max_lo">5</param>
+                                                      </generator> 
+                                     </id>
+                                     <property name="productName" column="product_name" type="java.lang.String"/>
+                                     <property name="prodPrice" column="product_price" type="java.lang.Double"/>
+                       </class>
+        </hibernate-mapping>

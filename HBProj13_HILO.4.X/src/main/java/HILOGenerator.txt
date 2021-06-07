@@ -1,0 +1,154 @@
+
+1) #01 :hilo
+
+<generator class="hilo"/>
+
+Hibernate: 
+    drop table if exists product
+Hibernate: 
+    drop table if exists hibernate_unique_key
+Hibernate: 
+    drop table if exists product_sequence
+Hibernate: 
+    create table product (
+        product_id integer not null,
+        product_name varchar(255),
+        product_price double precision,
+        primary key (product_id)
+    )
+Hibernate: 
+    create table hibernate_unique_key (
+         next_hi integer 
+    )
+Hibernate: 
+    insert into hibernate_unique_key values ( 0 )
+Hibernate: 
+    create table product_sequence (
+         sequence_name varchar(255),
+         sequence_next_hi_value integer 
+    )
+Hibernate: 
+    select
+        next_hi 
+    from
+        hibernate_unique_key for update
+            
+Hibernate: 
+    update
+        hibernate_unique_key 
+    set
+        next_hi = ? 
+    where
+        next_hi = ?
+Hibernate: 
+    insert 
+    into
+        product
+        (product_name, product_price, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::1
+
+2nd Time onwards
+--------------------------------
+Hibernate: 
+    insert 
+    into
+        product
+        (product_name, product_price, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::32768
+
+  1) #02  : 
+            <!-- HB uses formula is ::  max_lo*next_hi+next_hi  [next_hi is column name ]  -->     
+                                                          <!--  10*1+1=11,
+                                                                       10*2+2=22
+                                                                       ,10*3+3=33
+                                                                       ..........etc -->                                                 
+                   <generator class="hilo">
+                                     <param name="max_lo">10</param> 
+                  </generator>
+                  
+                  or 
+                         //HB uses our own Table ,max_lo val
+                      <generator class="hilo">
+	                                      <param name="table">HI_TAB</param>
+	                                        <param name="column">HI_VAL</param>
+	                                       <param name="max_lo">10</param>
+                       </generator>
+                                                               
+
+Hibernate: 
+    drop table if exists product
+Hibernate: 
+    drop table if exists hibernate_unique_key
+Hibernate: 
+    drop table if exists product_sequence
+Hibernate: 
+    create table product (
+        product_id integer not null,
+        product_name varchar(255),
+        product_price double precision,
+        primary key (product_id)
+    )
+Hibernate: 
+    create table hibernate_unique_key (
+         next_hi integer 
+    )
+Hibernate: 
+    insert into hibernate_unique_key values ( 0 )
+Hibernate: 
+    create table product_sequence (
+         sequence_name varchar(255),
+         sequence_next_hi_value integer 
+    )
+Hibernate: 
+    select
+        next_hi 
+    from
+        hibernate_unique_key for update
+            
+Hibernate: 
+    update
+        hibernate_unique_key 
+    set
+        next_hi = ? 
+    where
+        next_hi = ?
+Hibernate: 
+    insert 
+    into
+        product
+        (product_name, product_price, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::1
+
+2nd time onwards
+------------------------------
+Hibernate: 
+    insert 
+    into
+        product
+        (product_name, product_price, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::11
+
+3rd time 
+-------------
+  insert 
+    into
+        product
+        (product_name, product_price, product_id) 
+    values
+        (?, ?, ?)
+successfully saved product object with id   ::22
+
+
+
+
+
+
+
