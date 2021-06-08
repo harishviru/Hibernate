@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping>
+                       <class name="com.har.entity.Book" table="book">
+	                         <!-- Cfg  Composite PK with isbn,bookName-->
+	                             <!-- <composite-id>
+	                                     <key-property name="isbn" column="isbn"/>
+	                                     <key-property name="bookName" column="book_name"/>
+	                             </composite-id> -->
+	                               <!--  Composite PK as Seperate class-->
+	                             <composite-id name="compk" class="com.har.entity.CompositePK">
+	                                     <key-property name="isbn" column="isbn"/>
+	                                     <key-property name="bookName" column="book_name"/>
+	                             </composite-id>
+	                             
+                                     <property name="category" column="category" type="java.lang.String"/>
+                                     <property name="authorName" column="authorName" type="java.lang.String"/>
+                                     <property name="price" column="price" type="java.lang.Double"/>
+                       </class>
+        </hibernate-mapping>
