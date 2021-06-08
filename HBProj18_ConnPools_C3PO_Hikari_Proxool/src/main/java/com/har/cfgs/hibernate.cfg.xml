@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+        <hibernate-configuration>
+                          <session-factory>
+                                          <!-- Driver Connection properties (mandatory)  -->
+                                             <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+                                            <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/HBWalkOne</property>
+                                             <property name="hibernate.connection.username">root</property>
+                                            <property name="hibernate.connection.password">root</property>
+                                            <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+                         
+                                          <!-- Hibernate Properties (Optional) -->
+                                            <property name="show_sql">true</property>
+                                           <property name="format_sql">true</property>
+                                            <property name="hbm2ddl.auto">create</property><!-- Possible values are     :::create,create-drop,update,validate -->
+                         
+                                             <!--  Connection provider to work with C3P0   #01:hibernate-c3p0 -->
+<!--                                               <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+ -->                         
+                                             <!-- Conn properties -->
+                                                <property name="hibernate.c3p0.min_size">10</property>
+                                               <property name="hibernate.c3p0.max_size">100</property>
+                                                <property name="hibernate.c3p0.timeout">100</property>
+                                                <property name="hibernate.c3p0.max_statements">50</property>
+                                                <property name="hibernate.c3p0.idle_test_period">1000</property>
+                                                
+                                                <!-- Connection provider to work with Proxool  #02:hibernate-proxool -->
+<!--                                                   <property name="connection.provider_class">org.hibernate.proxool.internal.ProxoolConnectionProvider</property>
+ -->      
+                                                  <!-- Proxool properites -->  
+                                                 <property name="hibernate.proxool.pool_alias">proxyPool</property>
+                                                  <property name="hibernate.proxool.xml">com/har/cfgs/proxool.xml</property>
+                                                
+                                                
+                                                <!-- Connection provider to work with Hikari -#03.hibernate-hikaricp -->
+                                                <property name="connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
+
+	                                                 <!-- HikariCP settings -->
+	                                               <property name="hikari.connectionTimeout">50000</property>
+	                                                <property name="hibernate.hikari.minimumIdle">10</property>
+	                                                <property name="hibernate.hikari.maximumPoolSize">20</property>
+	                                                  <property name="hibernate.hikari.idleTimeout">30000</property> 
+      
+                                           
+                                           <!-- HB mapping files resources/classes -->
+                                         <mapping resource="com/har/entity/Book.hbm.xml"/>
+                          </session-factory>
+        </hibernate-configuration>
