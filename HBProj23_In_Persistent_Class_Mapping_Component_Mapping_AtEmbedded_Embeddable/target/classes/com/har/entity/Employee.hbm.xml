@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping>
+                       <class name="com.har.entity.Employee" table="employee_tab">
+                                     <id name="empId" column="employee_id" type="java.lang.Integer">
+                                           <generator class="increment"/>
+                                     </id>
+                                     
+                                     <property name="empName" column="emp_name" type="java.lang.String"/>
+                                     <property name="designation" column="designation" type="java.lang.String"/>
+                                     <property name="salary" column="salary" type="java.lang.Double"/>
+
+                                        <!-- address as component mapping.....! -->
+                                       <component name="address" class="com.har.entity.Address">
+                                                   <property name="houseNo" column="house_no"/>
+                                                   <property name="street" column="street"/>
+                                                   <property name="city" column="city"/>
+                                                   <property name="state" column="state"/>
+                                      </component>                                    
+                       </class>
+        </hibernate-mapping>
