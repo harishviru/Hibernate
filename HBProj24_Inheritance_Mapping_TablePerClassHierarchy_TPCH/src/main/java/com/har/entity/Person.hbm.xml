@@ -1,0 +1,23 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.har.entity.Person" table="person_tab" discriminator-value="PERSON"  polymorphism="explicit">
+           <id name="personId" column="person_id" type="java.lang.Integer">
+                            <generator class="increment"/>
+                  </id>         
+                  <!--  Discriminator column to divided record/object type in DB-->
+         <discriminator  column="person_type" type="string"/>
+         <property name="personName" column="person_name" type="string"  />
+          <!-- subclass #01 -->
+         <subclass  name="com.har.entity.Employee"  discriminator-value="EMPLOYEE">
+               <property name="designation" column="designation" type="java.lang.String"/>
+                <property name="address" column="address" type="java.lang.String"/>
+              <property name="salary" column="salary" type="java.lang.Double"/>
+         </subclass>
+          <!-- subclass #02 -->
+         <subclass  name="com.har.entity.ContractEmployee"  discriminator-value="CONTRACT_EMPLOYEE">
+                             <property name="location" column="location" type="java.lang.String"/>
+                            <property name="contractPeriod" column="contract_period" type="java.lang.Float"/>
+         </subclass>
+         </class> 
+ </hibernate-mapping>
