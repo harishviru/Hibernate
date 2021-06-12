@@ -1,0 +1,22 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.har.entity.Person" table="person_Table_Per_SubClass_tab" discriminator-value="Per" polymorphism="explicit">
+           <id name="personId" column="person_id" type="java.lang.Integer">
+                            <generator class="increment"/>
+                  </id>         
+         <property name="personName" column="person_name" type="string"  />
+         <!-- subclass #01 _TPCC -->
+         <union-subclass name="com.har.entity.Employee"  table="EMPLOYEE_JOINED_SUB_01">
+                            <property name="designation" column="designation" type="java.lang.String"/>
+                             <property name="address" column="address" type="java.lang.String"/>
+                              <property name="salary" column="salary" type="java.lang.Double"/>
+         </union-subclass>
+         
+         <union-subclass name="com.har.entity.ContractEmployee" table="CONTRACT_EMPLOYEE_JOINED_SUB_02">
+                                  <property name="location" column="location" type="java.lang.String"/>
+                                    <property name="contractPeriod" column="contract_period" type="java.lang.Float"/>
+         </union-subclass>
+       
+         </class> 
+ </hibernate-mapping>
