@@ -1,0 +1,37 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+        <hibernate-mapping>
+                    <class name="com.har.entity.Traveller" table="traveller">
+                       <id name="travellerId" column="traveller_id" type="java.lang.Integer">
+                            <generator class="increment"/>
+                      </id>
+                      <property name="travellerName" column="traveller_name"/>
+                      
+                      <!-- <list> tag     #friends  -->
+                       <list name="friends" table="traveller_list_friends">
+                                   <key column="traveller_Id"/>         <!--FK to assiociation.......!   [ key is used to define the foreign key in this table]-->
+                                  <index column="traveller_index" type="int" length="15"/> <!-- <index> element is used to identify the type. List and Map are indexed collection  -->
+                                  <element column="traveller_friend_name" length="20" type="string"/> <!-- <element> is used to define the element of the collection. -->
+                       </list>
+                      
+                      <!-- <bag> tag    #countriesToVisit -->
+                       <bag name="countriesToVisit" table="traveller_bag_countries_to_visit">
+                              <key column="traveller_Id"/>         <!--FK to assiociation.......!   [ key is used to define the foreign key in this table]-->
+                              <element column="country_name" length="20" type="string"/> 
+                       </bag>
+                    
+                       <!-- <set> tag    #phones -->
+                     <set name="phones" table="traveller_set_phoneNos">
+                            <key column="traveller_Id"/>         <!--FK to assiociation.......!   [ key is used to define the foreign key in this table]-->
+                            <element column="phone_number" type="long" length="12"/>
+                     </set>
+                    
+                      <!-- <map> tag  #placesVisited -->
+                     <map name="placesVisited" table="places_map_visited">
+                            <key column="traveller_Id"/>         <!--FK to assiociation.......!   [ key is used to define the foreign key in this table]-->
+                             <map-key column="tour_name" length="20" type="string"/>
+                             <element column="tour_place" length="30" type="string"/>
+                     </map>
+                    </class>
+        </hibernate-mapping>
