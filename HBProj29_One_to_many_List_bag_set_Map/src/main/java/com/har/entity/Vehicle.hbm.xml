@@ -1,0 +1,12 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+        <hibernate-mapping>
+                      <class name="com.har.entity.Vehicle" table="vehicle">
+                       <id name="vehicleId" column="vehicle_Id" type="java.lang.Integer">
+                            <generator class="increment"/>
+                      </id>
+                         <property name="vehicleType" column="vehicle_type" />
+                         <property name="vehicleOwnerName" column="vehicle_owner_name" />
+                    </class>
+        </hibernate-mapping>

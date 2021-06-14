@@ -1,0 +1,36 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping>
+                      <class name="com.har.entity.Person" table="person">
+                                    <id name="personId" column="person_Id" type="java.lang.Integer" >
+                                       <generator class="increment"/>
+                                    </id>
+                                    <property name="personName" column="person_name"/>
+                                    
+                                     <!-- #01 .<list> tag     #addressList  -->
+                                    <list name="addressList" cascade="all" lazy="false">
+                                                <key column="person_id"/>
+                                                <list-index column="address_index" base="1" />
+                                                <one-to-many class="com.har.entity.Address" />
+                                    </list>
+                                    
+                                      <!-- #02 .<bag> tag     #vehicleList  -->
+                                    <bag name="vehicleList" cascade="all" lazy="extra">
+                                                <key column="person_id"/>
+                                                <one-to-many class="com.har.entity.Vehicle" />
+                                    </bag>
+                                    
+                                    <!--#03. <Set> tag   #bankAccountSet  -->
+                                     <set name="bankAccountSet" cascade="all" lazy="true"> 
+                                                       <key column="person_id"/>
+                                                       <one-to-many class="com.har.entity.BankAccount" />
+                                     </set>
+                                     <!--#04. <map> tag   #placedVistedMap  -->
+                                    <map name="placedVistedMap" cascade="all"  lazy="extra">
+                                                <key column="person_id"/>
+                                               <map-key column="map_key_index" type="string" length="20"/>
+                                               <one-to-many  class="com.har.entity.Country"/>
+                                </map>
+                      </class>
+        </hibernate-mapping>
+        
