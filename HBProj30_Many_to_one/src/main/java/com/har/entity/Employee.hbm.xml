@@ -1,0 +1,16 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        <hibernate-mapping>
+                      <class name="com.har.entity.Employee" table="employee">
+                                    <id name="employeeId" column="employee_Id" type="java.lang.Integer" >
+                                       <generator class="increment"/>
+                                    </id>
+                                    <property name="empName" column="emp_name"/>
+                                    
+                                    <property name="salary" />
+                                   <many-to-one name="department" class="com.har.entity.Department" cascade="all" lazy="no-proxy">
+                                      <column name="department_id"/> <!--FK column association in employee table  -->
+                                   </many-to-one>
+                      </class>
+        </hibernate-mapping>
+        
