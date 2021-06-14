@@ -61,6 +61,19 @@
 
 Note :: In the above tags ,we insert  inside or child of any collection type <one-to-many  class="Pkg.ClassName"/>
 
+Inverse::
+-----------
+• Inverse keyword is responsible for managing the insert/update for the foreign key column.
+• An Inverse keyword has the boolean value "true/false" .
+• The default of this keyword is 'false'
+
+• If the inverse keyword value is false, parent class is responsible for saving/updating the child and it's relationship.
+• If the inverse keyword valye is true,an associated subclass is responsible for saving/updaing itself
+
+Note ::
+     • An inverse keyword is always used with the one-to-many and many-to-many
+     • It doesn't work with many-to-one relationship
+
 
 #In Anno ::
 -----------------
