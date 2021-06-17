@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.har.entity.Patient" table="patient">
+         <id name="patientId"  column="patient_Id" type="int">
+               <generator class="increment"/>
+         </id>
+         <property name="patientName"  column="patient_name" length="15" type="string"/>
+         <property name="patientAddrs"  column="patient_addrs" length="15" type="string"/>
+        <property name="problem" type="string"/>
+        
+               <!-- #01 :: Uni-directional  -->       
+         <!--  Default  link table name is  Patient_doctors having columns [patient_Id,doctor_Id] -->
+       <!--  <set name="doctors"   cascade="all"  lazy="extra">
+            <key column="patient_Id"/>         Fk association column
+            <many-to-many  class="com.har.entity.Doctor" column="doctor_Id" /> 
+         </set>
+         -->
+                <!-- With cust link table name as "patients_docs" -->
+           <!-- <set name="doctors"   cascade="all"  lazy="extra" table="patients_docs">
+            <key column="patient_Id"/>         Fk association column
+            <many-to-many  class="com.har.entity.Doctor" column="doctor_Id" /> 
+         </set> -->
+        
+      </class> 
+ </hibernate-mapping>
+
+
