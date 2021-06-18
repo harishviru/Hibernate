@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.har.entity.Person" table="person">
+         <id name="personId"  column="person_Id" type="int">
+               <generator class="increment"/>
+         </id>
+         <property name="firstName"  column="first_name" length="15" type="string"/>
+         <property name="lastName"  column="last_name" length="15" type="string"/>
+         
+         <!--Bi-directional  with idbag with collection-id-->
+          <idbag name="cars" cascade="all" lazy="true" table="person_cars">
+                 <collection-id type="int" column="col_index">
+                     <generator class="increment"/> 
+                </collection-id>
+               <key column="person_id"/>       <!-- FK  -->
+              <many-to-many  class="com.har.entity.Car" column="car_id"/>
+          </idbag>
+      </class> 
+ </hibernate-mapping>
+ 
+ 
+
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.har.entity.Car" table="car">
+         <id name="carId"  column="car_Id" type="int">
+               <generator class="increment"/>
+         </id>
+         <property name="carName"  column="car_name" length="15" type="string"/>
+         <property name="modal"  column="modal" length="15" type="string"/>
+         
+         <!--Bi-directional  -->
+         <set name="people" cascade="all" lazy="true" table="person_cars" inverse="true">
+            <key column="car_id"/>       <!-- FK  -->
+              <many-to-many  class="com.har.entity.Person" column="person_id"/>
+         </set> 
+        
+      </class> 
+ </hibernate-mapping>
+ 
+ 
+
+
